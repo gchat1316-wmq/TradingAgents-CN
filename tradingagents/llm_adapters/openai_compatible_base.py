@@ -240,6 +240,37 @@ class ChatDashScopeOpenAIUnified(OpenAICompatibleBase):
         )
 
 
+class ChatKimiOpenAI(OpenAICompatibleBase):
+    """Kimi OpenAI兼容适配器"""
+
+    def __init__(
+        self,
+        model: str = "moonshotai/Kimi-K2-Instruct",
+        api_key: Optional[str] = None,
+        base_url: Optional[str] = None,
+        temperature: float = 0.1,
+        max_tokens: Optional[int] = None,
+        **kwargs
+    ):
+        if base_url is None:
+            env_base_url = os.getenv("KIMI_BASE_URL")
+            if env_base_url and not env_base_url.startswith('your_') and not env_base_url.startswith('your-'):
+                base_url = env_base_url
+            else:
+                base_url = "https://api.openai.com/v1"
+
+        super().__init__(
+            provider_name="kimi",
+            model=model,
+            api_key_env_var="KIMI_API_KEY",
+            base_url=base_url,
+            api_key=api_key,
+            temperature=temperature,
+            max_tokens=max_tokens,
+            **kwargs
+        )
+
+
 class ChatQianfanOpenAI(OpenAICompatibleBase):
     """文心一言千帆平台 OpenAI兼容适配器"""
     
@@ -448,6 +479,15 @@ OPENAI_COMPATIBLE_PROVIDERS = {
             "qwen-plus-latest": {"context_length": 32768, "supports_function_calling": True},
             "qwen-max": {"context_length": 32768, "supports_function_calling": True},
             "qwen-max-latest": {"context_length": 32768, "supports_function_calling": True}
+        }
+    },
+    "kimi": {
+        "adapter_class": ChatKimiOpenAI,
+        "base_url": "https://api.openai.com/v1",
+        "api_key_env": "KIMI_API_KEY",
+        "models": {
+            "moonshotai/Kimi-K2-Instruct": {"context_length": 32768, "supports_function_calling": True},
+            "moonshot-v1-8k": {"context_length": 8192, "supports_function_calling": True}
         }
     },
     "qianfan": {

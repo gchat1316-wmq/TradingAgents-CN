@@ -217,13 +217,14 @@ def render_sidebar():
         # LLM提供商选择
         llm_provider = st.selectbox(
             "LLM提供商",
-            options=["dashscope", "deepseek", "google", "openai", "openrouter", "siliconflow", "custom_openai", "qianfan"],
-            index=["dashscope", "deepseek", "google", "openai", "openrouter", "siliconflow", "custom_openai", "qianfan"].index(st.session_state.llm_provider) if st.session_state.llm_provider in ["dashscope", "deepseek", "google", "openai", "openrouter", "siliconflow", "custom_openai", "qianfan"] else 0,
+            options=["dashscope", "deepseek", "google", "openai", "kimi", "openrouter", "siliconflow", "custom_openai", "qianfan"],
+            index=["dashscope", "deepseek", "google", "openai", "kimi", "openrouter", "siliconflow", "custom_openai", "qianfan"].index(st.session_state.llm_provider) if st.session_state.llm_provider in ["dashscope", "deepseek", "google", "openai", "kimi", "openrouter", "siliconflow", "custom_openai", "qianfan"] else 0,
             format_func=lambda x: {
                 "dashscope": "🇨🇳 阿里百炼",
                 "deepseek": "🚀 DeepSeek V3",
                 "google": "🌟 Google AI",
                 "openai": "🤖 OpenAI",
+                "kimi": "🧩 Kimi-for-Code",
                 "openrouter": "🌐 OpenRouter",
                 "siliconflow": "🇨🇳 硅基流动",
                 "custom_openai": "🔧 自定义OpenAI端点",
@@ -476,6 +477,35 @@ def render_sidebar():
 
              # OpenAI特殊提示
              st.info("💡 **OpenAI配置**: 在.env文件中设置OPENAI_API_KEY")
+        elif llm_provider == "kimi":
+            kimi_options = [
+                "moonshotai/Kimi-K2-Instruct",
+                "moonshot-v1-8k"
+            ]
+
+            current_index = 0
+            if st.session_state.llm_model in kimi_options:
+                current_index = kimi_options.index(st.session_state.llm_model)
+
+            llm_model = st.selectbox(
+                "选择Kimi模型",
+                options=kimi_options,
+                index=current_index,
+                format_func=lambda x: {
+                    "moonshotai/Kimi-K2-Instruct": "Kimi-K2 Instruct",
+                    "moonshot-v1-8k": "Moonshot V1 8K"
+                }[x],
+                help="选择用于分析的Kimi模型",
+                key="kimi_model_select"
+            )
+
+            if st.session_state.llm_model != llm_model:
+                logger.debug(f"🔄 [Persistence] Kimi模型变更: {st.session_state.llm_model} → {llm_model}")
+            st.session_state.llm_model = llm_model
+            logger.debug(f"💾 [Persistence] Kimi模型已保存: {llm_model}")
+            save_model_selection(st.session_state.llm_provider, st.session_state.model_category, llm_model)
+
+            st.info("💡 **Kimi配置**: 在.env文件中设置KIMI_API_KEY")
         elif llm_provider == "custom_openai":
             st.markdown("### 🔧 自定义OpenAI端点配置")
             

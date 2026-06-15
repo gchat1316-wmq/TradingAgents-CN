@@ -9,6 +9,7 @@ _PROVIDER_ALIASES = {
     "alibaba": "qwen",
     "zhipu": "glm",
     "siliconflow": "openai",
+    "moonshot": "kimi",
 }
 
 _OPENAI_COMPATIBLE = {
@@ -21,6 +22,7 @@ _OPENAI_COMPATIBLE = {
     "aihubmix",
     "ollama",
     "custom_openai",
+    "kimi",
 }
 
 

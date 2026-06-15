@@ -1,7 +1,7 @@
 """
 Multi-source stock basics synchronization service
 - Supports multiple data sources with fallback mechanism
-- Priority: Tushare > AKShare > BaoStock 
+- Priority: a-stock-data > BaoStock > AKShare
 - Fetches A-share stock basic info with extended financial metrics
 - Upserts into MongoDB collection `stock_basic_info`
 - Provides unified interface for different data sources
@@ -32,9 +32,9 @@ JOB_KEY = "stock_basics_multi_source"
 
 class DataSourcePriority(Enum):
     """数据源优先级枚举"""
-    TUSHARE = 1
-    AKSHARE = 2
-    BAOSTOCK = 3
+    A_STOCK_DATA = 1
+    BAOSTOCK = 2
+    AKSHARE = 3
 
 
 @dataclass

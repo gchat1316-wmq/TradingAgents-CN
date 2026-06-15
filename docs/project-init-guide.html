@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TradingAgents-CN 项目初始化与能力说明</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --paper: #fffdf7;
+      --ink: #1e2320;
+      --muted: #69716a;
+      --line: #d7d0c2;
+      --accent: #0b6b62;
+      --accent-2: #b6422d;
+      --code: #17201d;
+      --code-fg: #dce9df;
+      --chip: #e4efe9;
+      --warn: #fff1d8;
+      --warn-line: #d9a441;
+      --ok: #e7f4df;
+      --bad: #fae3de;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, rgba(30, 35, 32, .035) 1px, transparent 1px) 0 0 / 28px 28px,
+        linear-gradient(rgba(30, 35, 32, .035) 1px, transparent 1px) 0 0 / 28px 28px,
+        var(--bg);
+      color: var(--ink);
+      font-family: "Songti SC", "Noto Serif SC", Georgia, serif;
+      line-height: 1.65;
+    }
+
+    a { color: var(--accent); }
+
+    .page {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 56px;
+    }
+
+    header {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 1.3fr .7fr;
+      gap: 28px;
+      align-items: end;
+      box-shadow: 8px 8px 0 rgba(30, 35, 32, .08);
+    }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent-2);
+      font: 700 13px/1.2 Menlo, Consolas, monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-size: clamp(34px, 6vw, 72px);
+      line-height: .98;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 18px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .snapshot {
+      border-left: 4px solid var(--accent);
+      padding-left: 18px;
+      font-family: Menlo, Consolas, monospace;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 24px;
+      margin-top: 24px;
+      align-items: start;
+    }
+
+    nav {
+      position: sticky;
+      top: 16px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 18px;
+    }
+
+    nav strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 0;
+      color: var(--ink);
+      text-decoration: none;
+      border-top: 1px solid rgba(215, 208, 194, .7);
+      font-size: 14px;
+    }
+
+    section {
+      border: 1px solid var(--line);
+      background: var(--paper);
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 26px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 20px 0 8px;
+      font-size: 18px;
+      line-height: 1.25;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 16px;
+      background: #fffaf0;
+      min-height: 146px;
+    }
+
+    .card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--accent);
+      font-size: 17px;
+    }
+
+    .card p, li { color: var(--muted); }
+
+    .card p { margin: 0; }
+
+    .route {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 14px;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .tag {
+      display: inline-block;
+      width: fit-content;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: var(--chip);
+      color: var(--accent);
+      font: 700 12px/1.4 Menlo, Consolas, monospace;
+    }
+
+    pre {
+      margin: 10px 0 0;
+      padding: 14px;
+      overflow: auto;
+      border-radius: 6px;
+      background: var(--code);
+      color: var(--code-fg);
+      font: 13px/1.55 Menlo, Consolas, monospace;
+    }
+
+    code {
+      font-family: Menlo, Consolas, monospace;
+      background: rgba(11, 107, 98, .1);
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+    }
+
+    .status {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .status div {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      background: var(--ok);
+      min-height: 96px;
+    }
+
+    .status .warn { background: var(--warn); border-color: var(--warn-line); }
+    .status .bad { background: var(--bad); border-color: #d98372; }
+    .status b { display: block; margin-bottom: 4px; }
+    .status span { color: var(--muted); font-size: 14px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      vertical-align: top;
+      border-top: 1px solid var(--line);
+      padding: 10px 8px;
+    }
+
+    th {
+      color: var(--accent);
+      font-family: Menlo, Consolas, monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+
+    .note {
+      border-left: 4px solid var(--warn-line);
+      background: var(--warn);
+      padding: 12px 14px;
+      color: #66512a;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      padding-top: 8px;
+    }
+
+    @media (max-width: 900px) {
+      header, .layout, .route { grid-template-columns: 1fr; }
+      nav { position: static; }
+      .grid, .status { grid-template-columns: 1fr; }
+      .page { width: min(100vw - 20px, 760px); padding-top: 10px; }
+      header, section { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <p class="eyebrow">TradingAgents-CN / 初始化说明</p>
+        <h1>多智能体股票研究平台，本地启动路线与能力总览</h1>
+        <p class="lead">本页基于当前仓库源码与文档整理，适合作为第一次接手项目时的入口。项目定位是学习与研究用途的 AI 股票分析系统，不提供实盘交易指令。</p>
+      </div>
+      <div class="snapshot">
+        <div>项目根目录：TradingAgents-CN</div>
+        <div>当前版本标识：v1.0.1 / 1.0.0-preview</div>
+        <div>推荐架构：FastAPI + Vue 3 + MongoDB + Redis</div>
+        <div>备用界面：Streamlit Web / CLI</div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <nav>
+        <strong>页面目录</strong>
+        <a href="#status">本机初始化状态</a>
+        <a href="#capabilities">项目能力</a>
+        <a href="#architecture">架构与模块</a>
+        <a href="#startup">怎么启动</a>
+        <a href="#config">必须配置</a>
+        <a href="#first-run">首次使用建议</a>
+      </nav>
+
+      <main>
+        <section id="status">
+          <h2>本机初始化状态</h2>
+          <div class="status">
+            <div class="warn">
+              <b>Python 默认版本偏低</b>
+              <span>当前 <code>python3</code> 是 3.9.6，项目要求 3.10+。本机已有 <code>/opt/homebrew/bin/python3.10</code>、Python 3.11 和 3.12 可用。</span>
+            </div>
+            <div>
+              <b>Node/npm 可用</b>
+              <span>当前 Node v25.5.0、npm 11.8.0，可启动 Vue 前端；项目要求 Node 18+。</span>
+            </div>
+            <div class="bad">
+              <b>Docker 未安装或不可用</b>
+              <span><code>docker</code> 命令不存在。若要走推荐 Docker 路线，需要先安装 Docker Desktop 或配置 Docker CLI。</span>
+            </div>
+          </div>
+          <p class="note">已从 <code>.env.example</code> 复制生成本地 <code>.env</code>。它只是模板副本，不包含真实密钥；启动分析前需要填入至少一个 LLM API Key，A 股数据建议再填 <code>TUSHARE_TOKEN</code>。</p>
+        </section>
+
+        <section id="capabilities">
+          <h2>项目能力</h2>
+          <div class="grid">
+            <div class="card">
+              <strong>多智能体股票分析</strong>
+              <p>包含市场技术、基本面、新闻、社交媒体、研究员、交易员、风控与管理者等角色，形成从信息收集到投资观点生成的分析链路。</p>
+            </div>
+            <div class="card">
+              <strong>多市场覆盖</strong>
+              <p>支持 A 股、港股、美股相关分析入口，前端也包含多市场股票查询、个股详情和历史分析页面。</p>
+            </div>
+            <div class="card">
+              <strong>多数据源</strong>
+              <p>集成 Tushare、AKShare、BaoStock、Yahoo Finance、Finnhub，并提供数据同步、单股同步、多周期历史数据和数据源优先级配置。</p>
+            </div>
+            <div class="card">
+              <strong>多 LLM 提供商</strong>
+              <p>模型目录覆盖 OpenAI、Anthropic、Google Gemini、DeepSeek、通义千问、OpenRouter、AiHubMix、Ollama、GLM、自定义 OpenAI 兼容端点。</p>
+            </div>
+            <div class="card">
+              <strong>现代化 Web 控制台</strong>
+              <p>Vue 3 + Element Plus 前端包含仪表盘、股票分析、批量分析、任务队列、报告中心、自选股、筛选器、模拟交易、系统设置等页面。</p>
+            </div>
+            <div class="card">
+              <strong>后端 API 与实时通道</strong>
+              <p>FastAPI 提供 REST API、SSE 和 WebSocket，用于任务进度、通知、队列、报告、配置、缓存、日志和数据库管理。</p>
+            </div>
+            <div class="card">
+              <strong>报告与导出</strong>
+              <p>分析报告支持列表、详情、模块化内容读取，以及 Markdown、Word、PDF 等导出相关能力。</p>
+            </div>
+            <div class="card">
+              <strong>配置与用量治理</strong>
+              <p>支持 LLM 厂家、模型目录、默认模型、数据源、数据库连接、缓存、Token 用量和成本统计的可视化管理。</p>
+            </div>
+            <div class="card">
+              <strong>模拟交易与学习中心</strong>
+              <p>提供虚拟账户、下单、持仓、订单、重置等接口，以及 AI 基础、提示词、多智能体原理、风险局限和论文资料等学习内容。</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="architecture">
+          <h2>架构与模块</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>目录</th>
+                <th>作用</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>app/</code></td>
+                <td>FastAPI 后端，包含认证、分析任务、报告、股票数据、配置、数据库、缓存、日志、调度、通知、模拟交易等路由与服务。</td>
+              </tr>
+              <tr>
+                <td><code>frontend/</code></td>
+                <td>Vue 3 + Vite 前端，默认开发端口 3000，开发环境代理 <code>/api</code> 到后端 8000。</td>
+              </tr>
+              <tr>
+                <td><code>tradingagents/</code></td>
+                <td>核心多智能体图、分析师、数据流、工具、LLM 客户端、默认配置和股票研究流程。</td>
+              </tr>
+              <tr>
+                <td><code>web/</code></td>
+                <td>旧版 Streamlit Web 管理界面，默认端口 8501，可作为轻量备用入口。</td>
+              </tr>
+              <tr>
+                <td><code>cli/</code></td>
+                <td>命令行交互入口，适合不启动前端时做快速分析或初始化。</td>
+              </tr>
+              <tr>
+                <td><code>scripts/</code></td>
+                <td>数据同步、诊断、迁移、部署、启动、测试、数据库初始化等脚本集合。</td>
+              </tr>
+              <tr>
+                <td><code>docs/</code></td>
+                <td>架构、部署、配置、数据源、LLM、故障排除、用户指南、发布说明和学习资料。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="startup">
+          <h2>怎么启动</h2>
+
+          <div class="route">
+            <div>
+              <span class="tag">推荐：Docker</span>
+            </div>
+            <div>
+              <p>适合完整体验新架构，包含后端、前端、MongoDB、Redis。当前机器缺少 Docker，需要先安装 Docker Desktop。</p>
+              <pre><code>cp .env.example .env
+# 编辑 .env，填入 API Key
+docker compose up -d
+
+# 访问
+# 前端：http://localhost:3000
+# 后端：http://localhost:8000
+# API 文档：http://localhost:8000/docs</code></pre>
+            </div>
+          </div>
+
+          <div class="route">
+            <div>
+              <span class="tag">开发：本地前后端</span>
+            </div>
+            <div>
+              <p>适合改代码。需要 MongoDB 和 Redis 已在本机或远程可用，并在 <code>.env</code> 中配置连接。</p>
+              <pre><code>/opt/homebrew/bin/python3.10 -m venv env
+source env/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+pip install -e .
+
+# 启动 FastAPI 后端
+python -m app
+
+# 另开终端启动前端
+cd frontend
+npm install
+npm run dev</code></pre>
+              <p>访问 <code>http://localhost:3000</code>，前端会把 <code>/api</code> 代理到 <code>http://localhost:8000</code>。</p>
+            </div>
+          </div>
+
+          <div class="route">
+            <div>
+              <span class="tag">备用：Streamlit</span>
+            </div>
+            <div>
+              <p>适合快速试旧版界面，默认端口 8501。注意根目录没有 <code>start_web.py</code>，更稳妥的是直接运行 Streamlit 或 <code>web/run_web.py</code>。</p>
+              <pre><code>source env/bin/activate
+python -m streamlit run web/app.py
+
+# 或
+python web/run_web.py</code></pre>
+            </div>
+          </div>
+
+          <div class="route">
+            <div>
+              <span class="tag">CLI</span>
+            </div>
+            <div>
+              <p>适合命令行测试多智能体流程。</p>
+              <pre><code>source env/bin/activate
+python -m cli.main</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section id="config">
+          <h2>必须配置</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>配置项</th>
+                <th>说明</th>
+                <th>建议</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>DEEPSEEK_API_KEY</code> / <code>DASHSCOPE_API_KEY</code> / <code>OPENAI_API_KEY</code> / <code>GOOGLE_API_KEY</code></td>
+                <td>至少配置一个大模型密钥，否则无法完成智能体分析。</td>
+                <td>国内网络优先试 DeepSeek 或通义千问；已有 OpenAI 兼容网关也可走自定义端点。</td>
+              </tr>
+              <tr>
+                <td><code>TUSHARE_TOKEN</code></td>
+                <td>A 股数据源推荐配置项，部分基础数据、财务数据和同步能力依赖它。</td>
+                <td>没有 Token 时可先依赖 AKShare 做轻量测试，但数据完整性会受限。</td>
+              </tr>
+              <tr>
+                <td><code>MONGODB_*</code> / <code>REDIS_*</code></td>
+                <td>新架构用于报告、任务、配置、缓存、通知、用量统计等持久化能力。</td>
+                <td>Docker 路线自动起服务；本地路线需要自己启动或改成远程连接。</td>
+              </tr>
+              <tr>
+                <td><code>JWT_SECRET</code></td>
+                <td>后端认证使用的签名密钥。</td>
+                <td>生产或长期使用不要保留默认值。</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="first-run">
+          <h2>首次使用建议</h2>
+          <ol>
+            <li>先填 <code>.env</code> 中的 LLM Key，并确认后端能访问对应模型服务。</li>
+            <li>如果走新架构，先启动 MongoDB 与 Redis，再启动 <code>python -m app</code> 和 <code>npm run dev</code>。</li>
+            <li>打开前端后先进入系统设置，检查模型、数据源、数据库和缓存配置。</li>
+            <li>先用研究深度 1、少量分析师测试，例如 A 股 <code>000001</code>、美股 <code>AAPL</code>、港股 <code>0700.HK</code>。</li>
+            <li>做正式分析前先完成股票基础数据或单股数据同步，否则报告可能缺失行情、财务或新闻材料。</li>
+          </ol>
+          <p class="note">许可证提醒：仓库说明写明 <code>app/</code> 和 <code>frontend/</code> 属于需商业授权的专有部分。个人学习/研究可以使用；商业应用需要联系项目方授权。</p>
+        </section>
+      </main>
+    </div>
+
+    <footer>
+      生成位置：docs/project-init-guide.html。可直接用浏览器打开，无需启动服务。
+    </footer>
+  </div>
+</body>
+</html>

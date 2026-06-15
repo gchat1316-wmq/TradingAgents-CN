@@ -14,6 +14,7 @@ def check_api_keys():
     anthropic_key = os.getenv("ANTHROPIC_API_KEY")
     google_key = os.getenv("GOOGLE_API_KEY")
     qianfan_key = os.getenv("QIANFAN_API_KEY")
+    kimi_key = os.getenv("KIMI_API_KEY")
 
     
     # 构建详细状态
@@ -47,6 +48,12 @@ def check_api_keys():
             "display": f"{google_key[:12]}..." if google_key else "未配置",
             "required": False,
             "description": "Google AI API密钥"
+        },
+        "KIMI_API_KEY": {
+            "configured": bool(kimi_key),
+            "display": f"{kimi_key[:12]}..." if kimi_key else "未配置",
+            "required": False,
+            "description": "Kimi API密钥"
         },
         "QIANFAN_ACCESS_KEY": {
             "configured": bool(qianfan_key),

@@ -358,6 +358,11 @@ def run_stock_analysis(stock_symbol, analysis_date, analysts, research_depth, ll
             config["backend_url"] = "https://api.openai.com/v1"
             logger.info(f"🤖 [OpenAI] 使用模型: {llm_model}")
             logger.info(f"🤖 [OpenAI] API端点: https://api.openai.com/v1")
+        elif llm_provider == "kimi":
+            # Kimi使用OpenAI兼容API
+            config["backend_url"] = "https://api.openai.com/v1"
+            logger.info(f"🧩 [Kimi] 使用模型: {llm_model}")
+            logger.info(f"🧩 [Kimi] API端点: https://api.openai.com/v1")
         elif llm_provider == "openrouter":
             # OpenRouter使用OpenAI兼容API
             config["backend_url"] = "https://openrouter.ai/api/v1"

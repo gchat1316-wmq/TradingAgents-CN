@@ -153,9 +153,9 @@ class MongoDBCacheAdapter:
         except Exception as e:
             logger.error(f"❌ 获取数据源优先级失败: {e}", exc_info=True)
 
-        # 默认顺序：Tushare > AKShare > BaoStock
-        logger.info(f"📊 [数据源优先级] 使用默认顺序: ['tushare', 'akshare', 'baostock']")
-        return ['tushare', 'akshare', 'baostock']
+        # 默认顺序：a-stock-data > BaoStock > AKShare
+        logger.info("📊 [数据源优先级] 使用默认顺序: ['a-stock-data', 'baostock', 'akshare']")
+        return ['a-stock-data', 'baostock', 'akshare']
 
     def get_historical_data(self, symbol: str, start_date: str = None, end_date: str = None,
                           period: str = "daily") -> Optional[pd.DataFrame]:

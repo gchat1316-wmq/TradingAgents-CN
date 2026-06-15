@@ -22,7 +22,7 @@ class BaoStockAdapter(DataSourceAdapter):
         return "baostock"
 
     def _get_default_priority(self) -> int:
-        return 1  # lowest priority (数字越大优先级越高)
+        return 2  # fallback after a-stock-data (数字越大优先级越高)
 
     def is_available(self) -> bool:
         try:
@@ -256,4 +256,3 @@ class BaoStockAdapter(DataSourceAdapter):
         yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
         logger.info(f"BaoStock: Using yesterday as trade date: {yesterday}")
         return yesterday
-

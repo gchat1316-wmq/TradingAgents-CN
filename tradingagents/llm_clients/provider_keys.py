@@ -17,6 +17,8 @@ _ALIASES = {
     "qianfan": "qianfan",
     "custom_openai": "custom_openai",
     "siliconflow": "siliconflow",
+    "kimi": "kimi",
+    "moonshot": "kimi",
 }
 
 _CANONICAL_ALIASES = {
@@ -53,6 +55,7 @@ def env_key_for_provider(provider: str) -> str:
         "openrouter": "OPENROUTER_API_KEY",
         "aihubmix": "AIHUBMIX_API_KEY",
         "siliconflow": "SILICONFLOW_API_KEY",
+        "kimi": "KIMI_API_KEY",
         "qianfan": "QIANFAN_API_KEY",
         "glm": "ZHIPU_API_KEY",
     }
@@ -65,6 +68,7 @@ def default_backend_url(provider: str) -> str:
         "google": "https://generativelanguage.googleapis.com/v1beta",
         "qwen": "https://dashscope.aliyuncs.com/compatible-mode/v1",
         "openai": "https://api.openai.com/v1",
+        "kimi": "https://api.openai.com/v1",
         "deepseek": "https://api.deepseek.com",
         "anthropic": "https://api.anthropic.com",
         "openrouter": "https://openrouter.ai/api/v1",

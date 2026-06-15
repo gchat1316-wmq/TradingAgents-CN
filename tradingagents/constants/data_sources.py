@@ -28,6 +28,7 @@ class DataSourceCode(str, Enum):
     MONGODB = "mongodb"  # MongoDB 数据库缓存（最高优先级）
     
     # ==================== 中国市场数据源 ====================
+    A_STOCK_DATA = "a-stock-data"  # a-stock-data - A股直连HTTP工具集
     TUSHARE = "tushare"      # Tushare - 专业A股数据
     AKSHARE = "akshare"      # AKShare - 开源金融数据（A股+港股）
     BAOSTOCK = "baostock"    # BaoStock - 免费A股数据
@@ -85,6 +86,20 @@ DATA_SOURCE_REGISTRY: Dict[str, DataSourceInfo] = {
         requires_api_key=False,
         is_free=True,
         features=["本地缓存", "最快速度", "离线可用"],
+    ),
+
+    DataSourceCode.A_STOCK_DATA: DataSourceInfo(
+        code=DataSourceCode.A_STOCK_DATA,
+        name="a-stock-data",
+        display_name="a-stock-data",
+        provider="simonlin1212/a-stock-data",
+        description="A股直连HTTP数据工具集，优先使用腾讯/东财等公开端点，内置东财限流",
+        supported_markets=["a_shares"],
+        requires_api_key=False,
+        is_free=True,
+        official_website="https://github.com/simonlin1212/a-stock-data",
+        documentation_url="https://github.com/simonlin1212/a-stock-data/blob/main/SKILL.md",
+        features=["实时行情", "股票列表", "K线", "新闻公告", "免费无Key"],
     ),
     
     # Tushare
@@ -342,4 +357,3 @@ def is_data_source_supported(code: str) -> bool:
         是否支持
     """
     return code in DATA_SOURCE_REGISTRY
-

@@ -279,18 +279,8 @@ async def lifespan(app: FastAPI):
         # 使用多数据源同步服务（支持自动切换）
         multi_source_service = MultiSourceBasicsSyncService()
 
-        # 根据 TUSHARE_ENABLED 配置决定优先数据源
-        # 如果 Tushare 被禁用，系统会自动使用其他可用数据源（AKShare/BaoStock）
-        preferred_sources = None  # None 表示使用默认优先级顺序
-
-        if settings.TUSHARE_ENABLED:
-            # Tushare 启用时，优先使用 Tushare
-            preferred_sources = ["tushare", "akshare", "baostock"]
-            logger.info(f"📊 股票基础信息同步优先数据源: Tushare > AKShare > BaoStock")
-        else:
-            # Tushare 禁用时，使用 AKShare 和 BaoStock
-            preferred_sources = ["akshare", "baostock"]
-            logger.info(f"📊 股票基础信息同步优先数据源: AKShare > BaoStock (Tushare已禁用)")
+        preferred_sources = ["a-stock-data", "baostock", "akshare"]
+        logger.info("📊 股票基础信息同步优先数据源: a-stock-data > BaoStock > AKShare")
 
         # 立即在启动后尝试一次（不阻塞）
         async def run_sync_with_sources():

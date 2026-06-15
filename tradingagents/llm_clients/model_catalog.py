@@ -129,6 +129,17 @@ MODEL_OPTIONS: ProviderModeOptions = {
             ("Custom model ID", "custom"),
         ],
     },
+    "kimi": {
+        "quick": [
+            ("Kimi-K2 Instruct", "moonshotai/Kimi-K2-Instruct"),
+            ("Custom model ID", "custom"),
+        ],
+        "deep": [
+            ("Kimi-K2 Instruct", "moonshotai/Kimi-K2-Instruct"),
+            ("Moonshot V1 8K", "moonshot-v1-8k"),
+            ("Custom model ID", "custom"),
+        ],
+    },
 }
 
 

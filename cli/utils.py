@@ -38,6 +38,11 @@ PROVIDER_OPTIONS: List[Dict[str, str]] = [
         "base_url": "https://api.openai.com/v1",
     },
     {
+        "label": "Kimi for Code",
+        "key": "kimi",
+        "base_url": "https://api.openai.com/v1",
+    },
+    {
         "label": "🔧 自定义OpenAI端点",
         "key": "custom_openai",
         "base_url": "custom",

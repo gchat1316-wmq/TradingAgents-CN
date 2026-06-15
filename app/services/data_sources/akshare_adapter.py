@@ -22,7 +22,7 @@ class AKShareAdapter(DataSourceAdapter):
         return "akshare"
 
     def _get_default_priority(self) -> int:
-        return 2  # 数字越大优先级越高
+        return 1  # fallback after BaoStock (数字越大优先级越高)
 
     def is_available(self) -> bool:
         """检查AKShare是否可用"""
@@ -389,4 +389,3 @@ class AKShareAdapter(DataSourceAdapter):
         yesterday = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
         logger.info(f"AKShare: Using yesterday as trade date: {yesterday}")
         return yesterday
-

@@ -68,6 +68,20 @@ class ModelValidationTests(unittest.TestCase):
 
         self.assertEqual(client.provider, "qianfan")
 
+    def test_factory_supports_kimi_as_openai_compatible(self):
+        fake_langchain_openai = ModuleType("langchain_openai")
+
+        class _FakeChatOpenAI:
+            def __init__(self, **kwargs):
+                self.kwargs = kwargs
+
+        fake_langchain_openai.ChatOpenAI = _FakeChatOpenAI
+
+        with patch.dict("sys.modules", {"langchain_openai": fake_langchain_openai}):
+            client = create_llm_client("kimi", "moonshotai/Kimi-K2-Instruct")
+
+        self.assertEqual(client.provider, "kimi")
+
     def test_factory_supports_google_via_compatible_adapter(self):
         fake_google_adapter = ModuleType("tradingagents.llm_adapters.google_openai_adapter")
 

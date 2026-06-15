@@ -25,10 +25,16 @@ class ProviderKeysTests(unittest.TestCase):
     def test_default_backend_url_mapping(self):
         self.assertIn("dashscope.aliyuncs.com", default_backend_url("qwen"))
         self.assertIn("open.bigmodel.cn", default_backend_url("glm"))
+        self.assertEqual(default_backend_url("kimi"), "https://api.openai.com/v1")
 
     def test_canonical_aliases(self):
         self.assertIn("dashscope", canonical_aliases("qwen"))
         self.assertIn("zhipu", canonical_aliases("glm"))
+
+    def test_kimi_provider_aliases_and_env_key(self):
+        self.assertEqual(normalize_provider_key("kimi"), "kimi")
+        self.assertEqual(normalize_provider_key("moonshot"), "kimi")
+        self.assertEqual(env_key_for_provider("kimi"), "KIMI_API_KEY")
 
 
 if __name__ == "__main__":
